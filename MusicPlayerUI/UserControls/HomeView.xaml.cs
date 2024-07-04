@@ -65,7 +65,7 @@ namespace MusicPlayerUI.UserControls
         {
             foreach (var mediaFile in MediaFiles)
             {
-                if (!AlbumsView.Albums.Contains(mediaFile.Album)) AlbumsView.Albums.Add(mediaFile.Album);
+                AlbumsView.addAlbum(mediaFile);
                 if (!ArtistsView.Artists.Contains(mediaFile.Artist)) ArtistsView.Artists.Add(mediaFile.Artist);
             }
         }
@@ -75,7 +75,6 @@ namespace MusicPlayerUI.UserControls
             MediaFile selectedFile = mediaDataGrid.SelectedItem as MediaFile;
             if (selectedFile != null && selectedFile.FilePath != null)
             {
-
                 MusicPlayer.MediaElement.Source = new Uri(selectedFile.FilePath);
                 MusicPlayer.MediaElement.LoadedBehavior = MediaState.Manual;
                 MusicPlayer.MediaElement.UnloadedBehavior = MediaState.Stop;

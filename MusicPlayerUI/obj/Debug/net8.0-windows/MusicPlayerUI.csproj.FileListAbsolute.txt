@@ -1,0 +1,3 @@
+C:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\bin\Debug\net8.0-windows\MusicPlayerUI.exe
+C:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\bin\Debug\net8.0-windows\MusicPlayerUI.dll
+C:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\bin\Debug\net8.0-windows\TagLibSharp.dll

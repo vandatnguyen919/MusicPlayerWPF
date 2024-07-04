@@ -1,60 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MusicPlayerUI.UserControls
 {
-    /// <summary>
-    /// Interaction logic for AlbumView.xaml
-    /// </summary>
     public partial class AlbumsView : UserControl
     {
-        public static ObservableCollection<string> Albums { get; set; }
+        public static ObservableCollection<Album> Albums { get; set; }
 
         public AlbumsView()
         {
             InitializeComponent();
-            Albums = new ObservableCollection<string>();
-            albumsComboBox.ItemsSource = Albums;
+            Albums = new ObservableCollection<Album>();
+            DataContext = this;
         }
 
-        private void AlbumsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public static void addAlbum(MediaFile mediaFile)
         {
-            if (albumsComboBox.SelectedItem is string selectedAlbum)
+            Album album = new Album() 
             {
-                FilterMediaFilesByAlbum(selectedAlbum);
+                AlbumName = mediaFile.Album,
+                ArtistName = mediaFile.Artist,
+                ReleaseYear = mediaFile.Year
+            };
+            if (!Albums.Contains(album, new AlbumComparer()))
+            {
+                Albums.Add(album);
             }
         }
-
-        public void FilterMediaFilesByAlbum(string album)
+    }
+    public class Album
+    {
+        public string AlbumName { get; set; }
+        public string ArtistName { get; set; }
+        public int? ReleaseYear { get; set; }
+    }
+    public class AlbumComparer : IEqualityComparer<Album>
+    {
+        public bool Equals(Album x, Album y)
         {
-            mediaDataGrid.ItemsSource = new ObservableCollection<MediaFile>(HomeView.MediaFiles.Where(m => m.Album == album));
+            return x.AlbumName == y.AlbumName && x.ArtistName == y.ArtistName && x.ReleaseYear == y.ReleaseYear;
         }
-        private void MediaDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            MediaFile selectedFile = mediaDataGrid.SelectedItem as MediaFile;
-            if (selectedFile != null && selectedFile.FilePath != null)
-            {
 
-                MusicPlayer.MediaElement.Source = new Uri(selectedFile.FilePath);
-                MusicPlayer.MediaElement.LoadedBehavior = MediaState.Manual;
-                MusicPlayer.MediaElement.UnloadedBehavior = MediaState.Stop;
-                MusicPlayer.MediaElement.MediaOpened += MusicPlayer.MediaElement_MediaOpened;
-                MusicPlayer.MediaElement.Play();
-                MusicPlayer.Timer.Start();
-            }
+        public int GetHashCode(Album obj)
+        {
+            return (obj.AlbumName, obj.ArtistName, obj.ReleaseYear).GetHashCode();
         }
     }
 }

@@ -17,11 +17,13 @@
         </Grid.RowDefinitions>
         
         <!-- Side Menu -->
-        <StackPanel Grid.Column="0" Margin="10">
-            <Button Content="Home" Click="ShowHomeView" Margin="5 75 5 5"/>
-            <Button Content="Albums" Click="ShowAlbumsView" Margin="5"/>
-            <Button Content="Artists" Click="ShowArtistsView" Margin="5"/>
-        </StackPanel>
+        <Border Grid.Column="0" Padding="10" Background="#FFEEEEEE">
+            <StackPanel>
+                <Button Content="Home" Click="ShowHomeView" Margin="5 75 5 5"/>
+                <Button Content="Albums" Click="ShowAlbumsView" Margin="5"/>
+                <Button Content="Artists" Click="ShowArtistsView" Margin="5"/>
+            </StackPanel>
+        </Border>
 
         <!-- Dynamic Content Control -->
         <ContentControl x:Name="MainContentControl" Grid.Column="1" Margin="10"/>
