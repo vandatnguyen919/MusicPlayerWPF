@@ -1,0 +1,76 @@
+﻿<Window x:Class="MusicPlayerUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusicPlayerUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="522" Width="800" ResizeMode="NoResize">
+    <Grid Background="#f9f9f9">
+        <!-- Left Navigation Pane -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Background="#d1e7e0" Grid.Column="0">
+            <TextBlock Text="LIBRARY" FontWeight="Bold" FontSize="16" Margin="20,30,0,0"/>
+            <Button Content="Home" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Playlists" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Artists" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Albums" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Songs" Style="{StaticResource CustomButtonStyle}"/>
+            <TextBlock Text="DISCOVER" FontWeight="Bold" FontSize="16" Margin="20,30,0,0"/>
+            <Button Content="Store" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Radio" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="For you" Style="{StaticResource CustomButtonStyle}"/>
+        </StackPanel>
+
+        <!-- Main Content Area -->
+        <Grid Grid.Column="1" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <TextBlock Text="Home" FontWeight="Bold" FontSize="32"/>
+            <!-- Daily Singer Section -->
+            <Border Grid.Row="1" Background="#40a07d" CornerRadius="10" Margin="0 20">
+                <StackPanel>
+                    <TextBlock Text="Daily Singer" FontWeight="Bold" FontSize="20" Foreground="White" Margin="20,20,0,0"/>
+                    <TextBlock Text="Taylor Swift" FontSize="16" Foreground="White" Margin="20,5,0,20"/>
+                    <ListBox Background="Transparent" ItemContainerStyle="{StaticResource CustomListBoxItemStyle}">
+                        <ListBoxItem Content="01    Love Story    03:56"/>
+                        <ListBoxItem Content="02    You Need to Call    03:39"/>
+                        <ListBoxItem Content="03    Blank Space    02:59"/>
+                        <ListBoxItem Content="04    ME    03:33"/>
+                        <ListBoxItem Content="05    Shake It Off    05:52"/>
+                        <ListBoxItem Content="06    Red    04:47"/>
+                        <ListBoxItem Content="07    You Belong With Me    06:20"/>
+                    </ListBox>
+                </StackPanel>
+            </Border>
+
+            <!-- Now Playing Section -->
+            <Border Grid.Row="2" CornerRadius="10" Background="#40a07d" Height="60">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10">
+                        <Ellipse Width="50" Height="50" Fill="Gray"/>
+                        <TextBlock Text="ME" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
+                        <TextBlock Text="Taylor Swift" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Button Content="&#x23EE;" FontSize="20" Background="Transparent" Foreground="White"/>
+                        <Button Content="&#x23EF;" FontSize="20" Background="Transparent" Foreground="White" Margin="0,0,20,0"/>
+                        <Button Content="&#x23ED;" FontSize="20" Background="Transparent" Foreground="White"/>
+                    </StackPanel>
+                    <Slider Width="191" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+
+
+</Window>
