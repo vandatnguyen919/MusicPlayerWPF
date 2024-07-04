@@ -10,12 +10,27 @@
     <Compile Update="MusicPlayer.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UserControls\AlbumsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\ArtistsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\HomeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="MainWindow.xaml">
+    <Page Update="MusicPlayer.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MusicPlayer.xaml">
+    <Page Update="UserControls\AlbumsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ArtistsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\HomeView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

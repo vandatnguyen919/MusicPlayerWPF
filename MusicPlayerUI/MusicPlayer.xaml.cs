@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusicPlayerUI.UserControls;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,79 +10,65 @@ namespace MusicPlayerUI
 {
     public partial class MusicPlayer : Window
     {
-        //public ObservableCollection<MediaFile> MediaFiles { get; set; }
-        private DispatcherTimer timer;
+        public static MediaElement MediaElement { set;  get; }
+        public static DispatcherTimer Timer { set; get; }
+        public static TextBlock TotalTimeTextBlock { set; get; }
 
+        private UserControl homeView;
+        private UserControl albumsView;
+        private UserControl artistsView;
         public MusicPlayer()
         {
             InitializeComponent();
+            
+            MediaElement = mediaElement;
 
-            //MediaFiles = new ObservableCollection<MediaFile>();
-            //mediaDataGrid.ItemsSource = MediaFiles;
+            Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromSeconds(1);
+            Timer.Tick += Timer_Tick;
 
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += Timer_Tick;
+            TotalTimeTextBlock = totalTimeTextBlock;
+
+            // Initialize views
+            homeView = new HomeView();
+            albumsView = new AlbumsView();
+            artistsView = new ArtistsView();
+
+            // Set the initial view
+            MainContentControl.Content = homeView;
         }
 
-        private void OpenMediaFile_Click(object sender, RoutedEventArgs e)
+        private void ShowHomeView(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog
-            {
-                Multiselect = true,
-                Filter = "Media Files|*.mp3;*.wav;*.wma;*.m4a;*.mp4;*.avi"
-            };
-            if (openFileDialog.ShowDialog() == true)
-            {
-                List<MediaFile> mediaFiles = new List<MediaFile>();
-                foreach (var fileName in openFileDialog.FileNames)
-                {
-                    var tfile = TagLib.File.Create(fileName);
-                    mediaFiles.Add(new MediaFile
-                    {
-                        TrackName = tfile.Tag.Title ?? System.IO.Path.GetFileNameWithoutExtension(fileName),
-                        Artist = tfile.Tag.FirstPerformer ?? "Unknown Artist",
-                        Album = tfile.Tag.Album ?? "Unknown Album",
-                        Year = (int)tfile.Tag.Year == 0 ? null : (int)tfile.Tag.Year,
-                        Genre = tfile.Tag.FirstGenre ?? "Unknown",
-                        Duration = tfile.Properties.Duration,
-                        FilePath = fileName
-                    });
-                }
-                mediaDataGrid.ItemsSource = mediaFiles;
-            }
+            MainContentControl.Content = homeView;
         }
 
-        private void MediaDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ShowAlbumsView(object sender, RoutedEventArgs e)
         {
-            MediaFile selectedFile = mediaDataGrid.SelectedItem as MediaFile;
-            if (selectedFile != null && selectedFile.FilePath != null)
-            {
-                mediaElement.Source = new Uri(selectedFile.FilePath);
-                mediaElement.LoadedBehavior = MediaState.Manual;
-                mediaElement.UnloadedBehavior = MediaState.Stop;
-                mediaElement.MediaOpened += MediaElement_MediaOpened;
-                mediaElement.Play();
-                timer.Start();
-            }
+            MainContentControl.Content = albumsView;
+        }
+
+        private void ShowArtistsView(object sender, RoutedEventArgs e)
+        {
+            MainContentControl.Content = artistsView;
         }
 
         private void Play_Click(object sender, RoutedEventArgs e)
         {
             mediaElement.Play();
-            timer.Start();
+            Timer.Start();
         }
 
         private void Pause_Click(object sender, RoutedEventArgs e)
         {
             mediaElement.Pause();
-            timer.Stop();
+            Timer.Stop();
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
             mediaElement.Stop();
-            timer.Stop();
+            Timer.Stop();
             playbackSlider.Value = 0;
             currentTimeTextBlock.Text = "0:00:00";
         }
@@ -112,25 +99,12 @@ namespace MusicPlayerUI
                 currentTimeTextBlock.Text = mediaElement.Position.ToString(@"h\:mm\:ss");
             }
         }
-
-        private void MediaElement_MediaOpened(object sender, RoutedEventArgs e)
+        public static void MediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
-            if (mediaElement.NaturalDuration.HasTimeSpan)
+            if (MusicPlayer.MediaElement.NaturalDuration.HasTimeSpan)
             {
-                totalTimeTextBlock.Text = mediaElement.NaturalDuration.TimeSpan.ToString(@"h\:mm\:ss");
+                MusicPlayer.TotalTimeTextBlock.Text = MusicPlayer.MediaElement.NaturalDuration.TimeSpan.ToString(@"h\:mm\:ss");
             }
         }
-    }
-    public class MediaFile
-    {
-        public string TrackName { get; set; }
-        public string Artist { get; set; }
-        public string Album { get; set; }
-        public int? Year { get; set; }
-        public string Genre { get; set; }
-        public TimeSpan Duration { get; set; }
-        public string FilePath { get; set; }  // Add a property to store the file path
-
-        public string FormattedDuration => Duration.ToString(@"h\:mm\:ss");
     }
 }
