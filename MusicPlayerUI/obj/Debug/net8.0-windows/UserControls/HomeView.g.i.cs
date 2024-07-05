@@ -61,7 +61,7 @@ namespace MusicPlayerUI.UserControls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/MusicPlayerUI;component/usercontrols/homeview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/MusicPlayerUI;V1.0.0.0;component/usercontrols/homeview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\UserControls\HomeView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

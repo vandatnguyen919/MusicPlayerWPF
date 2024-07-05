@@ -1,10 +1,7 @@
 ﻿using MusicPlayerUI.UserControls;
-using System;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using TagLib;
 
 namespace MusicPlayerUI
 {
@@ -13,6 +10,8 @@ namespace MusicPlayerUI
         public static MediaElement MediaElement { set;  get; }
         public static DispatcherTimer Timer { set; get; }
         public static TextBlock TotalTimeTextBlock { set; get; }
+
+        public static ContentControl MainContentControl { set; get; }
 
         private UserControl homeView;
         private UserControl albumsView;
@@ -29,28 +28,30 @@ namespace MusicPlayerUI
 
             TotalTimeTextBlock = totalTimeTextBlock;
 
+            MainContentControl = mainContentControl;
+
             // Initialize views
             homeView = new HomeView();
             albumsView = new AlbumsView();
             artistsView = new ArtistsView();
 
             // Set the initial view
-            MainContentControl.Content = homeView;
+            mainContentControl.Content = homeView;
         }
 
         private void ShowHomeView(object sender, RoutedEventArgs e)
         {
-            MainContentControl.Content = homeView;
+            mainContentControl.Content = homeView;
         }
 
         private void ShowAlbumsView(object sender, RoutedEventArgs e)
         {
-            MainContentControl.Content = albumsView;
+            mainContentControl.Content = albumsView;
         }
 
         private void ShowArtistsView(object sender, RoutedEventArgs e)
         {
-            MainContentControl.Content = artistsView;
+            mainContentControl.Content = artistsView;
         }
 
         private void Play_Click(object sender, RoutedEventArgs e)
@@ -99,11 +100,11 @@ namespace MusicPlayerUI
                 currentTimeTextBlock.Text = mediaElement.Position.ToString(@"h\:mm\:ss");
             }
         }
-        public static void MediaElement_MediaOpened(object sender, RoutedEventArgs e)
+        public void MediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
-            if (MusicPlayer.MediaElement.NaturalDuration.HasTimeSpan)
+            if (mediaElement.NaturalDuration.HasTimeSpan)
             {
-                MusicPlayer.TotalTimeTextBlock.Text = MusicPlayer.MediaElement.NaturalDuration.TimeSpan.ToString(@"h\:mm\:ss");
+                totalTimeTextBlock.Text = mediaElement.NaturalDuration.TimeSpan.ToString(@"h\:mm\:ss");
             }
         }
     }
