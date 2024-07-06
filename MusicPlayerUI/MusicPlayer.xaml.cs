@@ -1,8 +1,10 @@
 ﻿using MusicPlayerUI.UserControls;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace MusicPlayerUI
@@ -12,15 +14,23 @@ namespace MusicPlayerUI
         public static MediaElement MediaElement { get; set; }
         public static Slider PlaybackSlider { get; set; }
         public static TextBlock CurrentTimeTextBlock { get; set; }
-        public static ObservableCollection<MediaFile> MediaFiles { get; set; }
+        public static ObservableCollection<MediaFile> MediaFiles { get; set; } = [];
         public static MediaFile CurrentMediaFile { get; set; }
         public static DispatcherTimer Timer { get; set; }
         public static TextBlock TotalTimeTextBlock { get; set; }
+        public static Button PlayPauseButton { get; set; }
 
         public static ContentControl MainContentControl { get; set; }
         private UserControl homeView;
         private UserControl albumsView;
         private UserControl artistsView;
+
+        public static bool IsPaused { get; set; } = false;
+        public static bool IsShuffleEnabled { get; set; } = false;
+
+        // Volume properties
+        private bool isMuted = false;
+        private double previousVolume;
 
         public MusicPlayer()
         {
@@ -41,8 +51,13 @@ namespace MusicPlayerUI
 
             TotalTimeTextBlock = totalTimeTextBlock;
 
-            MainContentControl = mainContentControl;
+            PlayPauseButton = playPauseButton;
 
+            // Initialize the volume to 100%
+            MediaElement.Volume = 1.0;
+            volumeSlider.Value = 1.0;
+
+            MainContentControl = mainContentControl;
             // Initialize views
             homeView = new HomeView();
             albumsView = new AlbumsView();
@@ -68,18 +83,33 @@ namespace MusicPlayerUI
         }
 
         // Media Controller
-        private void Play_Click(object sender, RoutedEventArgs e)
+        private void PlayBackButton_Click(object sender, RoutedEventArgs e)
         {
-            mediaElement.Play();
-            Timer.Start();
+            PlayPreviousMediaFile();
         }
 
-        private void Pause_Click(object sender, RoutedEventArgs e)
+        private void PlayPause_Click(object sender, RoutedEventArgs e)
         {
-            mediaElement.Pause();
-            Timer.Stop();
+            if (IsPaused)
+            {
+                mediaElement.Play();
+                Timer.Start();
+            }
+            else
+            {
+                mediaElement.Pause();
+                Timer.Stop();
+            }
+            IsPaused = !IsPaused;
+            playPauseButton.Content = IsPaused ? "▶" : "❚❚";
         }
 
+        private void PlayNextButton_Click(object sender, RoutedEventArgs e)
+        {
+            PlayNextMediaFile();
+        }
+
+        // Volume
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (mediaElement != null && volumeValueTextBlock != null)
@@ -89,6 +119,29 @@ namespace MusicPlayerUI
             }
         }
 
+        private void VolumeIcon_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (MediaElement != null)
+            {
+                if (isMuted)
+                {
+                    MediaElement.Volume = previousVolume;
+                    isMuted = false;
+                    ((TextBlock)sender).Text = "🔊";
+                }
+                else
+                {
+                    previousVolume = MediaElement.Volume;
+                    MediaElement.Volume = 0;
+                    isMuted = true;
+                    ((TextBlock)sender).Text = "🔇";
+                }
+                volumeSlider.Value = MediaElement.Volume;
+                volumeValueTextBlock.Text = (volumeSlider.Value * 100).ToString("0") + "%";
+            }
+        }
+
+        // Playback Slider
         private void PlaybackSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (mediaElement.NaturalDuration.HasTimeSpan)
@@ -97,6 +150,7 @@ namespace MusicPlayerUI
             }
         }
 
+        // Media Timer
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (mediaElement.NaturalDuration.HasTimeSpan)
@@ -120,13 +174,33 @@ namespace MusicPlayerUI
             PlayNextMediaFile();
         }
 
-        private void PlayNextMediaFile()
+        private void PlayPreviousMediaFile()
         {
             int currentIndex = MediaFiles.IndexOf(CurrentMediaFile);
-            if (currentIndex < MediaFiles.Count - 1)
+            if (currentIndex > 0)
             {
-                var nextMediaFile = MediaFiles[currentIndex + 1];
+                var previousMediaFile = MediaFiles[currentIndex - 1];
+                PlayMediaFile(previousMediaFile);
+            }
+        }
+
+        private void PlayNextMediaFile()
+        {
+            if (IsShuffleEnabled)
+            {
+                Random random = new Random();
+                int nextIndex = random.Next(MediaFiles.Count);
+                var nextMediaFile = MediaFiles[nextIndex];
                 PlayMediaFile(nextMediaFile);
+            }
+            else
+            {
+                int currentIndex = MediaFiles.IndexOf(CurrentMediaFile);
+                if (currentIndex < MediaFiles.Count - 1)
+                {
+                    var nextMediaFile = MediaFiles[currentIndex + 1];
+                    PlayMediaFile(nextMediaFile);
+                }
             }
         }
 
@@ -147,10 +221,17 @@ namespace MusicPlayerUI
             PlaybackSlider.Value = 0;
             CurrentTimeTextBlock.Text = "0:00:00";
 
+            IsPaused = false;
+            PlayPauseButton.Content = IsPaused ? "▶" : "❚❚";
             // Play the media file
             MediaElement.Play();
             Timer.Start();
         }
 
+        private void ShuffleButton_Click(object sender, RoutedEventArgs e)
+        {
+            IsShuffleEnabled = !IsShuffleEnabled;
+            shuffleButton.Content = IsShuffleEnabled ? "Shuffle On" : "Shuffle Off";
+        }
     }
 }
