@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicPlayerUI"
         mc:Ignorable="d"
-        Title="MusicPlayer" Height="600" Width="800" WindowStartupLocation="CenterScreen">
+        Title="MusicPlayer" Height="800" Width="1422" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -55,7 +55,6 @@
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                 <Button Content="Play" Click="Play_Click" Margin="5"/>
                 <Button Content="Pause" Click="Pause_Click" Margin="5"/>
-                <Button Content="Stop" Click="Stop_Click" Margin="5"/>
                 <TextBlock Text="🔊" Margin="5 5 0 5"/>
                 <Slider x:Name="volumeSlider" Minimum="0" Maximum="1" Value="1" Width="100" ValueChanged="VolumeSlider_ValueChanged" Margin="5"/>
                 <TextBlock x:Name="volumeValueTextBlock" Width="35" Text="100%" TextAlignment="Right" VerticalAlignment="Center" Margin="5"/>

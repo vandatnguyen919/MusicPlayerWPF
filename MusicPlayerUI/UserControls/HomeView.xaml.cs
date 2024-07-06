@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,14 +11,12 @@ namespace MusicPlayerUI.UserControls
     public partial class HomeView : UserControl
     {
 
-        public static ObservableCollection<MediaFile> MediaFiles { get; set; }
+        public static ObservableCollection<MediaFile> HomeMediaFiles { get; set; }
 
         public HomeView()
         {
             InitializeComponent();
-
-            MediaFiles = new ObservableCollection<MediaFile>();
-            mediaDataGrid.ItemsSource = MediaFiles;
+            HomeMediaFiles = new ObservableCollection<MediaFile>();
         }
 
         private void OpenMediaFile_Click(object sender, RoutedEventArgs e)
@@ -32,7 +31,7 @@ namespace MusicPlayerUI.UserControls
                 foreach (var fileName in openFileDialog.FileNames)
                 {
                     var tfile = TagLib.File.Create(fileName);
-                    MediaFiles.Add(new MediaFile
+                    HomeMediaFiles.Add(new MediaFile
                     {
                         TrackName = tfile.Tag.Title ?? System.IO.Path.GetFileNameWithoutExtension(fileName),
                         Artist = tfile.Tag.FirstPerformer ?? "Unknown Artist",
@@ -43,14 +42,14 @@ namespace MusicPlayerUI.UserControls
                         FilePath = fileName
                     });
                 }
-                mediaDataGrid.ItemsSource = MediaFiles;
+                mediaDataGrid.ItemsSource = HomeMediaFiles;
             }
             UpdateAlbumsAndArtists();
         }
 
         private void UpdateAlbumsAndArtists()
         {
-            foreach (var mediaFile in MediaFiles)
+            foreach (var mediaFile in HomeMediaFiles)
             {
                 AlbumsView.addAlbum(mediaFile);
                 if (!ArtistsView.Artists.Contains(mediaFile.Artist)) ArtistsView.Artists.Add(mediaFile.Artist);
@@ -59,28 +58,46 @@ namespace MusicPlayerUI.UserControls
 
         private void MediaDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            MusicPlayer.MediaFiles = HomeMediaFiles;
             MediaFile selectedFile = mediaDataGrid.SelectedItem as MediaFile;
             if (selectedFile != null && selectedFile.FilePath != null)
             {
-                MusicPlayer.MediaElement.Source = new Uri(selectedFile.FilePath);
-                MusicPlayer.MediaElement.LoadedBehavior = MediaState.Manual;
-                MusicPlayer.MediaElement.UnloadedBehavior = MediaState.Stop;
-                MusicPlayer.MediaElement.MediaOpened += MusicPlayer.MediaElement_MediaOpened;
-                MusicPlayer.MediaElement.Play();
-                MusicPlayer.Timer.Start();
+                MusicPlayer.PlayMediaFile(selectedFile);
             }
         }
     }
-    public class MediaFile
+    public class MediaFile : INotifyPropertyChanged
     {
+        private bool isPlaying;
+
         public string TrackName { get; set; }
         public string Artist { get; set; }
         public string Album { get; set; }
         public int? Year { get; set; }
         public string Genre { get; set; }
         public TimeSpan Duration { get; set; }
-        public string FilePath { get; set; }  // Add a property to store the file path
+        public string FilePath { get; set; }
 
         public string FormattedDuration => Duration.ToString(@"h\:mm\:ss");
+
+        public bool IsPlaying
+        {
+            get { return isPlaying; }
+            set
+            {
+                if (isPlaying != value)
+                {
+                    isPlaying = value;
+                    OnPropertyChanged(nameof(IsPlaying));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

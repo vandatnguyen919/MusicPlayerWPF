@@ -40,21 +40,21 @@ namespace MusicPlayerUI.UserControls
 
         public void FilterMediaFilesByArtist(string artist)
         {
-            mediaDataGrid.ItemsSource = new ObservableCollection<MediaFile>(HomeView.MediaFiles.Where(m => m.Artist == artist));
+            mediaDataGrid.ItemsSource = new ObservableCollection<MediaFile>(HomeView.HomeMediaFiles.Where(m => m.Artist == artist));
         }
         private void MediaDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MediaFile selectedFile = mediaDataGrid.SelectedItem as MediaFile;
-            if (selectedFile != null && selectedFile.FilePath != null)
-            {
+            //MediaFile selectedFile = mediaDataGrid.SelectedItem as MediaFile;
+            //if (selectedFile != null && selectedFile.FilePath != null)
+            //{
 
-                MusicPlayer.MediaElement.Source = new Uri(selectedFile.FilePath);
-                MusicPlayer.MediaElement.LoadedBehavior = MediaState.Manual;
-                MusicPlayer.MediaElement.UnloadedBehavior = MediaState.Stop;
-                MusicPlayer.MediaElement.MediaOpened += MusicPlayer.MediaElement_MediaOpened;
-                MusicPlayer.MediaElement.Play();
-                MusicPlayer.Timer.Start();
-            }
+            //    MusicPlayer.MediaElement.Source = new Uri(selectedFile.FilePath);
+            //    MusicPlayer.MediaElement.LoadedBehavior = MediaState.Manual;
+            //    MusicPlayer.MediaElement.UnloadedBehavior = MediaState.Stop;
+            //    MusicPlayer.MediaElement.MediaOpened += MusicPlayer.MediaElement_MediaOpened;
+            //    MusicPlayer.MediaElement.Play();
+            //    MusicPlayer.Timer.Start();
+            //}
         }
     }
 }

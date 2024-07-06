@@ -21,7 +21,7 @@
             <Button Grid.Column="1" Content="Open File(s)" Click="OpenMediaFile_Click" Margin="10"/>
         </Grid>
 
-        <DataGrid x:Name="mediaDataGrid" Grid.Row="1" AutoGenerateColumns="False" SelectionChanged="MediaDataGrid_SelectionChanged" Margin="10" IsReadOnly="True">
+        <DataGrid x:Name="mediaDataGrid" Grid.Row="1" AutoGenerateColumns="False" SelectionChanged="MediaDataGrid_SelectionChanged" Margin="10" IsReadOnly="True" SelectionUnit="FullRow">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Track Name" Binding="{Binding TrackName}" Width="*"/>
                 <DataGridTextColumn Header="Artist" Binding="{Binding Artist}" Width="*"/>
@@ -31,5 +31,6 @@
                 <DataGridTextColumn Header="Duration" Binding="{Binding FormattedDuration}" Width="60"/>
             </DataGrid.Columns>
         </DataGrid>
+
     </Grid>
 </UserControl>

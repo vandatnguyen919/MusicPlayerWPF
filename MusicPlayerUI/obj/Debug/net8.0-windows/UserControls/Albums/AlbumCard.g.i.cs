@@ -53,7 +53,7 @@ namespace MusicPlayerUI.UserControls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/MusicPlayerU;V1.0.0.0;component/usercontrols/albums/albumcard.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/MusicPlayerUI;component/usercontrols/albums/albumcard.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\UserControls\Albums\AlbumCard.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

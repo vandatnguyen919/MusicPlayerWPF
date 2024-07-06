@@ -42,7 +42,7 @@ namespace MusicPlayerUI.UserControls
 
         private void AlbumCardButton_Click(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<MediaFile> mediaFiles = new ObservableCollection<MediaFile>(HomeView.MediaFiles.Where(m => m.Album == AlbumName));
+            ObservableCollection<MediaFile> mediaFiles = new ObservableCollection<MediaFile>(HomeView.HomeMediaFiles.Where(m => m.Album == AlbumName));
             TimeSpan totalDuration = mediaFiles.Aggregate(TimeSpan.Zero, (sum, file) => sum + file.Duration);
             var albumSongsView = new AlbumSongsView
             {
