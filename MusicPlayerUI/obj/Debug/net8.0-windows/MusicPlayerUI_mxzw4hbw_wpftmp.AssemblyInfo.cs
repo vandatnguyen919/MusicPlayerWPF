@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("MusicPlayerU")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("MusicPlayerUI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fc256274201cd5635393ca9649cc0778e74603fb")]
-[assembly: System.Reflection.AssemblyProductAttribute("MusicPlayerU")]
-[assembly: System.Reflection.AssemblyTitleAttribute("MusicPlayerU")]
+[assembly: System.Reflection.AssemblyProductAttribute("MusicPlayerUI")]
+[assembly: System.Reflection.AssemblyTitleAttribute("MusicPlayerUI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]

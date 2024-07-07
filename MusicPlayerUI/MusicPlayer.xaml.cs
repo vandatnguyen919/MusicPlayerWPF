@@ -83,6 +83,12 @@ namespace MusicPlayerUI
         }
 
         // Media Controller
+        private void ShuffleButton_Click(object sender, RoutedEventArgs e)
+        {
+            IsShuffleEnabled = !IsShuffleEnabled;
+            shuffleButton.Content = IsShuffleEnabled ? "Shuffle: On" : "Shuffle: Off";
+        }
+
         private void PlayBackButton_Click(object sender, RoutedEventArgs e)
         {
             PlayPreviousMediaFile();
@@ -109,13 +115,23 @@ namespace MusicPlayerUI
             PlayNextMediaFile();
         }
 
-        // Volume
+        // Volume Slider Handler
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (mediaElement != null && volumeValueTextBlock != null)
             {
                 mediaElement.Volume = volumeSlider.Value;
                 volumeValueTextBlock.Text = (volumeSlider.Value * 100).ToString("0") + "%";
+                if (mediaElement.Volume != 0)
+                {
+                    isMuted = false;
+                    volumeIconTextBlock.Text = "🔊";
+                }
+                else
+                {
+                    isMuted = true;
+                    volumeIconTextBlock.Text = "🔇";
+                }
             }
         }
 
@@ -226,12 +242,6 @@ namespace MusicPlayerUI
             // Play the media file
             MediaElement.Play();
             Timer.Start();
-        }
-
-        private void ShuffleButton_Click(object sender, RoutedEventArgs e)
-        {
-            IsShuffleEnabled = !IsShuffleEnabled;
-            shuffleButton.Content = IsShuffleEnabled ? "Shuffle On" : "Shuffle Off";
         }
     }
 }
