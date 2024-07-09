@@ -37,10 +37,10 @@ namespace MusicPlayerUI
             InitializeComponent();
 
             MediaElement = mediaElement;
-            MediaElement.MediaOpened += MediaElement_MediaOpened;
-            MediaElement.MediaEnded += MediaElement_MediaEnded;
             MediaElement.LoadedBehavior = MediaState.Manual;
             MediaElement.UnloadedBehavior = MediaState.Stop;
+            MediaElement.MediaOpened += MediaElement_MediaOpened;
+            MediaElement.MediaEnded += MediaElement_MediaEnded;
 
             PlaybackSlider = playbackSlider;
             CurrentTimeTextBlock = currentTimeTextBlock;
@@ -76,6 +76,18 @@ namespace MusicPlayerUI
         {
             mainContentControl.Content = albumsView;
         }
+
+        //private void AlbumsOption1_Click(object sender, RoutedEventArgs e)
+        //{
+        //    // Albums Option 1 logic
+        //    MessageBox.Show("Albums Option 1 clicked");
+        //}
+
+        //private void AlbumsOption2_Click(object sender, RoutedEventArgs e)
+        //{
+        //    // Albums Option 2 logic
+        //    MessageBox.Show("Albums Option 2 clicked");
+        //}
 
         private void ShowArtistsView(object sender, RoutedEventArgs e)
         {
@@ -143,14 +155,14 @@ namespace MusicPlayerUI
                 {
                     MediaElement.Volume = previousVolume;
                     isMuted = false;
-                    ((TextBlock)sender).Text = "🔊";
+                    volumeIconTextBlock.Text = "🔊";
                 }
                 else
                 {
                     previousVolume = MediaElement.Volume;
                     MediaElement.Volume = 0;
                     isMuted = true;
-                    ((TextBlock)sender).Text = "🔇";
+                    volumeIconTextBlock.Text = "🔇";
                 }
                 volumeSlider.Value = MediaElement.Volume;
                 volumeValueTextBlock.Text = (volumeSlider.Value * 100).ToString("0") + "%";
@@ -237,11 +249,17 @@ namespace MusicPlayerUI
             PlaybackSlider.Value = 0;
             CurrentTimeTextBlock.Text = "0:00:00";
 
-            IsPaused = false;
-            PlayPauseButton.Content = IsPaused ? "▶" : "❚❚";
-            // Play the media file
-            MediaElement.Play();
-            Timer.Start();
+            // Play the media file according to the status of the play/pause button
+            if (IsPaused)
+            {
+                MediaElement.Pause();
+                Timer.Stop();
+            } 
+            else
+            {
+                MediaElement.Play();
+                Timer.Start();
+            }
         }
     }
 }

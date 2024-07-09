@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MusicPlayerUI.UserControls
 {
@@ -56,13 +57,16 @@ namespace MusicPlayerUI.UserControls
             }
         }
 
-        private void MediaDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void MediaDataGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            MusicPlayer.MediaFiles = HomeMediaFiles;
-            MediaFile selectedFile = mediaDataGrid.SelectedItem as MediaFile;
-            if (selectedFile != null && selectedFile.FilePath != null)
+            if (e.ChangedButton == MouseButton.Left)
             {
-                MusicPlayer.PlayMediaFile(selectedFile);
+                MediaFile selectedFile = mediaDataGrid.SelectedItem as MediaFile;
+                if (selectedFile != null && selectedFile.FilePath != null)
+                {
+                    MusicPlayer.MediaFiles = HomeMediaFiles;
+                    MusicPlayer.PlayMediaFile(selectedFile);
+                }
             }
         }
     }

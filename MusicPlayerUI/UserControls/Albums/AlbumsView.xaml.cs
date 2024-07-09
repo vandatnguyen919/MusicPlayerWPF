@@ -5,7 +5,7 @@ namespace MusicPlayerUI.UserControls
 {
     public partial class AlbumsView : UserControl
     {
-        public static ObservableCollection<Album> Albums { get; set; }
+        public static ObservableCollection<Album> Albums { get; set; } = [];
 
         public AlbumsView()
         {

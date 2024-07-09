@@ -15,11 +15,20 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        
+
         <!-- Side Menu -->
         <Border Grid.Column="0" Padding="10" Background="#FFEEEEEE">
             <StackPanel>
                 <Button Content="Home" Click="ShowHomeView" Margin="5 75 5 5"/>
+                <!--<Expander Margin="5">
+                    <Expander.Header>
+                        <Button Content="Albums" Click="ShowAlbumsView"/>
+                    </Expander.Header>
+                    <StackPanel>
+                        <Button Content="Option 1" Click="AlbumsOption1_Click" Margin="5"/>
+                        <Button Content="Option 2" Click="AlbumsOption2_Click" Margin="5"/>
+                    </StackPanel>
+                </Expander>-->
                 <Button Content="Albums" Click="ShowAlbumsView" Margin="5"/>
                 <Button Content="Artists" Click="ShowArtistsView" Margin="5"/>
             </StackPanel>
@@ -64,5 +73,5 @@
                 <TextBlock x:Name="volumeValueTextBlock" Width="35" Text="100%" TextAlignment="Right" VerticalAlignment="Center" Margin="5"/>
             </StackPanel>
         </Grid>
-    </Grid>    
+    </Grid>
 </Window>

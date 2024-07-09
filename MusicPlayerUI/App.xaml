@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:MusicPlayerUI"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              StartupUri="MusicPlayer.xaml">
     <Application.Resources>
         <Style x:Key="TransparentButtonStyle" TargetType="Button">
@@ -38,6 +39,26 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="ContextMenu">
+                <Setter.Value>
+                    <ContextMenu>
+                        <MenuItem Header="Play" Command="{Binding Source={x:Static Application.Current}, Path=PlayCommand}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                        <MenuItem Header="Add to Playlist">
+                            <MenuItem.Resources>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Header" Value="{Binding}"/>
+                                    <Setter Property="Command" Value="{Binding Source={x:Static Application.Current}, Path=AddToPlaylistCommand}"/>
+                                    <Setter Property="CommandParameter" Value="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                </Style>
+                            </MenuItem.Resources>
+                            <MenuItem.ItemsSource>
+                                <Binding Source="{x:Static Application.Current}" Path="Playlists"/>
+                            </MenuItem.ItemsSource>
+                        </MenuItem>
+                        <MenuItem Header="Remove" Command="{Binding Source={x:Static Application.Current}, Path=RemoveCommand}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                    </ContextMenu>
+                </Setter.Value>
+            </Setter>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsPlaying}" Value="True">
                     <Setter Property="Background" Value="LightGreen" />
@@ -60,10 +81,14 @@
                                    {x:Static SystemColors.ControlTextBrushKey}}"/>
                     <Setter Property="Background">
                         <Setter.Value>
-                            <SolidColorBrush Color="Transparent"/>
+                            <SolidColorBrush Color="#ccc"/>
                         </Setter.Value>
                     </Setter>
                 </Trigger>
+                <DataTrigger Binding="{Binding IsPlaying}" Value="True">
+                    <Setter Property="Background" Value="LightGreen" />
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </DataTrigger>
             </Style.Triggers>
         </Style>
     </Application.Resources>
