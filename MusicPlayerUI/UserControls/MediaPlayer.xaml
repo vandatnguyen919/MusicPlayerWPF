@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="MusicPlayerUI.UserControls.MediaPlayer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MusicPlayerUI.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Background="#fff" Loaded="UserControl_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <MediaElement Visibility="Collapsed" x:Name="mediaElement"/>
+        
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0"  Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
+                <TextBlock x:Name="currentTimeTextBlock" Text="0:00:00"/>
+                <TextBlock Text="/" Margin="2 0"/>
+                <TextBlock x:Name="totalTimeTextBlock" Text="0:00:00"/>
+            </StackPanel>
+            <Slider x:Name="playbackSlider" Grid.Column="1" Height="20" HorizontalAlignment="Stretch" Minimum="0" Maximum="100" Value="0" ValueChanged="PlaybackSlider_ValueChanged" Margin="0 5"/>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button x:Name="shuffleButton" Content="Shuffle: Off" Click="ShuffleButton_Click" Width="90"  Padding="10 0" Margin="5 0" HorizontalContentAlignment="Left"/>
+
+            <Button x:Name="playBackButton" Content="⏮" Click="PlayBackButton_Click" Padding="10 0" Margin="5 0"/>
+            <Button x:Name="playPauseButton" Content="❚❚" Click="PlayPause_Click" Width="40" Padding="10 0" Margin="5 0"/>
+            <Button x:Name="playNextButton" Content="⏭" Click="PlayNextButton_Click" Padding="10 0" Margin="5 0"/>
+
+            <TextBlock x:Name="volumeIconTextBlock" Text="🔊" Margin="5,5,0,5" MouseLeftButtonUp="VolumeIcon_Click"/>
+            <Slider x:Name="volumeSlider" Minimum="0" Maximum="1" Value="1" Width="100" ValueChanged="VolumeSlider_ValueChanged" Margin="5"/>
+            <TextBlock x:Name="volumeValueTextBlock" Width="35" Text="100%" TextAlignment="Right" VerticalAlignment="Center" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

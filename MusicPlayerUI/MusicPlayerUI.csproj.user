@@ -7,7 +7,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="MusicPlayer.xaml.cs">
+    <Compile Update="UserControls\MediaPlayer.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="MainWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="UserControls\Albums\AlbumCard.xaml.cs">
@@ -25,9 +28,18 @@
     <Compile Update="UserControls\HomeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UserControls\Playlists\AddPlaylistWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\Playlists\PlaylistsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="MusicPlayer.xaml">
+    <Page Update="UserControls\MediaPlayer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\Albums\AlbumCard.xaml">
@@ -43,6 +55,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\HomeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\Playlists\AddPlaylistWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\Playlists\PlaylistsView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

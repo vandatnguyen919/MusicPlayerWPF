@@ -64,8 +64,8 @@ namespace MusicPlayerUI.UserControls
                 MediaFile selectedFile = mediaDataGrid.SelectedItem as MediaFile;
                 if (selectedFile != null && selectedFile.FilePath != null)
                 {
-                    MusicPlayer.MediaFiles = HomeMediaFiles;
-                    MusicPlayer.PlayMediaFile(selectedFile);
+                    MediaPlayer.MediaFiles = HomeMediaFiles;
+                    MediaPlayer.PlayMediaFile(selectedFile);
                 }
             }
         }

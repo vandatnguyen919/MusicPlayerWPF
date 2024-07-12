@@ -57,7 +57,7 @@ namespace MusicPlayerUI.UserControls
                 }
             };
             albumSongsView.songsDataGrid.ItemsSource = mediaFiles;
-            MusicPlayer.MainContentControl.Content = albumSongsView;
+            MainWindow.MainContentControl.Content = albumSongsView;
         }
     }
     public class AlbumDetails

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using MusicPlayerUI.UserControls.Playlists;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -10,7 +11,7 @@ namespace MusicPlayerUI
         public ICommand AddToPlaylistCommand { get; }
         public ICommand RemoveCommand { get; }
 
-        public ObservableCollection<string> Playlists { get; } = new ObservableCollection<string> { "Playlist 1", "Playlist 2", "Playlist 3" };
+        public ObservableCollection<Playlist> Playlists { get; } = [];
 
         public App()
         {
@@ -30,10 +31,37 @@ namespace MusicPlayerUI
 
         private void ExecuteAddToPlaylist(object parameter)
         {
-            if (parameter is MediaFile mediaFile)
+            if (parameter is object[] parameters && parameters.Length == 2)
             {
-                // Add to Playlist logic here
-                MessageBox.Show($"Add to Playlist clicked for {mediaFile.TrackName}");
+                var mediaFile = parameters[0] as MediaFile;
+                var playlist = parameters[1] as Playlist;
+
+                if (mediaFile != null && playlist != null)
+                {
+                    playlist.MediaFiles.Add(mediaFile);
+                    string s = "";
+                    foreach (var item in playlist.MediaFiles)
+                    {
+                        s += item.TrackName + "\n";
+                    }
+                    MessageBox.Show($"{mediaFile.TrackName} added to {playlist.PlaylistName}\n{s}");
+                }
+            }
+            else if (parameter is object[] newPlaylistParams && newPlaylistParams.Length == 1)
+            {
+                var mediaFile = newPlaylistParams[0] as MediaFile;
+
+                var addPlaylistWindow = new AddPlaylistWindow();
+                if (addPlaylistWindow.ShowDialog() == true)
+                {
+                    var newPlaylist = new Playlist { PlaylistName = addPlaylistWindow.PlaylistName };
+                    if (mediaFile != null)
+                    {
+                        newPlaylist.MediaFiles.Add(mediaFile);
+                    }
+                    Playlists.Add(newPlaylist);
+                    MessageBox.Show($"New playlist '{newPlaylist.PlaylistName}' added with media file '{mediaFile?.TrackName}'");
+                }
             }
         }
 

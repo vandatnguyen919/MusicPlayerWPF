@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:MusicPlayerUI"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             StartupUri="MusicPlayer.xaml">
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
         <Style x:Key="TransparentButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
@@ -34,6 +34,29 @@
             </Style.Triggers>
         </Style>
 
+        <!-- Custom Style for ContextMenu -->
+        <Style TargetType="ContextMenu">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContextMenu">
+                        <Border Background="#F0F0F0" BorderBrush="#CCCCCC" BorderThickness="1" CornerRadius="5">
+                            <StackPanel IsItemsHost="True" Margin="4"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Composite Collection for Playlists -->
+        <!--<CompositeCollection x:Key="CompositePlaylists">
+            <CollectionContainer Collection="{Binding Source={x:Static Application.Current}, Path=Playlists}"/>
+            <MenuItem Header="+ Add New Playlist" Command="{Binding Source={x:Static Application.Current}, Path=AddToPlaylistCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
+        </CompositeCollection>-->
+
+        <local:MultiParameterConverter x:Key="MultiParameterConverter" />
+
         <!-- Global DataGridRow Style -->
         <Style TargetType="DataGridRow">
             <Setter Property="Background" Value="Transparent"/>
@@ -44,15 +67,31 @@
                     <ContextMenu>
                         <MenuItem Header="Play" Command="{Binding Source={x:Static Application.Current}, Path=PlayCommand}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                         <MenuItem Header="Add to Playlist">
-                            <MenuItem.Resources>
+                            <MenuItem.ItemContainerStyle>
                                 <Style TargetType="MenuItem">
-                                    <Setter Property="Header" Value="{Binding}"/>
+                                    <Setter Property="Header" Value="{Binding PlaylistName}"/>
                                     <Setter Property="Command" Value="{Binding Source={x:Static Application.Current}, Path=AddToPlaylistCommand}"/>
-                                    <Setter Property="CommandParameter" Value="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                    <Setter Property="CommandParameter">
+                                        <Setter.Value>
+                                            <MultiBinding Converter="{StaticResource MultiParameterConverter}">
+                                                <Binding Path="PlacementTarget.DataContext" RelativeSource="{RelativeSource AncestorType=ContextMenu}"/>
+                                                <Binding Path="."/>
+                                            </MultiBinding>
+                                        </Setter.Value>
+                                    </Setter>
                                 </Style>
-                            </MenuItem.Resources>
+                            </MenuItem.ItemContainerStyle>
                             <MenuItem.ItemsSource>
-                                <Binding Source="{x:Static Application.Current}" Path="Playlists"/>
+                                <CompositeCollection>
+                                    <CollectionContainer Collection="{Binding Source={x:Static Application.Current}, Path=Playlists}"/>
+                                    <MenuItem Header="+ Add New Playlist" Command="{Binding Source={x:Static Application.Current}, Path=AddToPlaylistCommand}">
+                                        <MenuItem.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiParameterConverter}">
+                                                <Binding Path="."/>
+                                            </MultiBinding>
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                </CompositeCollection>
                             </MenuItem.ItemsSource>
                         </MenuItem>
                         <MenuItem Header="Remove" Command="{Binding Source={x:Static Application.Current}, Path=RemoveCommand}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
@@ -66,6 +105,7 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+
 
         <!-- Global DataGridCell Style - Remove the default blue selection color in data grid -->
         <Style TargetType="{x:Type DataGridCell}">

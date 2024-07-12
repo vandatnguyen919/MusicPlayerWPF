@@ -1,9 +1,12 @@
 ﻿C:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.i.cs
 FC:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\App.xaml;;
-FC:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\MusicPlayer.xaml;;
+FC:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\MainWindow.xaml;;
 FC:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\UserControls\Albums\AlbumCard.xaml;;
 FC:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\UserControls\Albums\AlbumSongsView.xaml;;
 FC:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\UserControls\Albums\AlbumsView.xaml;;
 FC:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\UserControls\ArtistsView.xaml;;
 FC:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\UserControls\HomeView.xaml;;
+FC:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\UserControls\MediaPlayer.xaml;;
+FC:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\UserControls\Playlists\AddPlaylistWindow.xaml;;
+FC:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\UserControls\Playlists\PlaylistsView.xaml;;
 
