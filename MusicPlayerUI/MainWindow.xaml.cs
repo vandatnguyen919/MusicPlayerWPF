@@ -1,4 +1,5 @@
 ﻿using MusicPlayerUI.UserControls;
+using MusicPlayerUI.UserControls.Albums;
 using MusicPlayerUI.UserControls.Playlists;
 using System.Windows;
 using System.Windows.Controls;

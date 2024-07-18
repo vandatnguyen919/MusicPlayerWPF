@@ -6,6 +6,35 @@
         xmlns:uc="clr-namespace:MusicPlayerUI.UserControls"
         mc:Ignorable="d"
         Title="MusicPlayer" Height="800" Width="1422" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="SidebarButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#282828"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5"
+                                    Padding="10 0">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#3D3D3D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -17,9 +46,9 @@
         </Grid.RowDefinitions>
 
         <!-- Side Menu -->
-        <Border Grid.Column="0" Padding="10" Background="#FFEEEEEE">
+        <Border Grid.Column="0" Padding="10" Background="#141414">
             <StackPanel>
-                <Button Content="Home" Click="ShowHomeView" Margin="5 75 5 5"/>
+                <Button Content="Home" Click="ShowHomeView" Margin="5 75 5 5" Style="{StaticResource SidebarButtonStyle}"/>
                 <!--<Expander Margin="5">
                     <Expander.Header>
                         <Button Content="Albums" Click="ShowAlbumsView"/>
@@ -29,14 +58,14 @@
                         <Button Content="Option 2" Click="AlbumsOption2_Click" Margin="5"/>
                     </StackPanel>
                 </Expander>-->
-                <Button Content="Albums" Click="ShowAlbumsView" Margin="5"/>
-                <Button Content="Artists" Click="ShowArtistsView" Margin="5"/>
-                <Button Content="Playlists" Click="ShowPlaylistsView" Margin="5"/>
+                <Button Content="Albums" Click="ShowAlbumsView" Margin="5" Style="{StaticResource SidebarButtonStyle}"/>
+                <Button Content="Artists" Click="ShowArtistsView" Margin="5" Style="{StaticResource SidebarButtonStyle}"/>
+                <Button Content="Playlists" Click="ShowPlaylistsView" Margin="5" Style="{StaticResource SidebarButtonStyle}"/>
             </StackPanel>
         </Border>
 
         <!-- Dynamic Content Control -->
-        <ContentControl x:Name="mainContentControl" Grid.Column="1" Margin="10"/>
+        <ContentControl x:Name="mainContentControl" Grid.Column="1"/>
 
         <Grid Grid.Row="1" Grid.ColumnSpan="2">
             <uc:MediaPlayer/>

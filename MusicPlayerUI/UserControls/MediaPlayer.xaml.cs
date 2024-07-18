@@ -20,7 +20,7 @@ namespace MusicPlayerUI.UserControls
         public static TextBlock TotalTimeTextBlock { get; set; }
         public static Button PlayPauseButton { get; set; }
 
-        public static bool IsPaused { get; set; } = false;
+        public static bool IsPaused { get; set; } = true;
         public static bool IsShuffleEnabled { get; set; } = false;
 
         // Volume properties

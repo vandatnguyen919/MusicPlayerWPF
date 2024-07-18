@@ -8,7 +8,8 @@ namespace MusicPlayerUI
 {
     public class Playlist
     {
+        public int PlaylistId { get; set; }
         public string PlaylistName { get; set; }
-        public HashSet<MediaFile> MediaFiles { get; set; } = [];
+        public List<MediaFile> MediaFiles { get; set; } = [];
     }
 }

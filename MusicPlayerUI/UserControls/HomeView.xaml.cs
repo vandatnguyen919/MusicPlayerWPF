@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using MusicPlayerUI.UserControls.Albums;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;

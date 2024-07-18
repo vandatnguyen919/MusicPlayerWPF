@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MusicPlayerUI.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="#fff">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#212121">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -18,7 +18,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Artist" FontWeight="Bold" FontSize="32"/>
+            <TextBlock Grid.Column="0" Text="Artist" Foreground="#fff" FontWeight="Medium" FontSize="45"/>
         </Grid>
         <ComboBox Grid.Row="1" x:Name="artistsComboBox" SelectionChanged="ArtistsComboBox_SelectionChanged" Width="100" Margin="10" HorizontalAlignment="Left"/>
         <DataGrid x:Name="mediaDataGrid" Grid.Row="2" AutoGenerateColumns="False" SelectionChanged="MediaDataGrid_SelectionChanged" Margin="10" IsReadOnly="True">

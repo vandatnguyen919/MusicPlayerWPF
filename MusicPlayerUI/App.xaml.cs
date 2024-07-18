@@ -7,14 +7,15 @@ namespace MusicPlayerUI
 {
     public partial class App : Application
     {
+        private PlaylistService _playlistService = new();
+        public ObservableCollection<Playlist> Playlists { get; set; }
         public ICommand PlayCommand { get; }
         public ICommand AddToPlaylistCommand { get; }
         public ICommand RemoveCommand { get; }
 
-        public ObservableCollection<Playlist> Playlists { get; } = [];
-
         public App()
         {
+            Playlists = PlaylistService.Playlists;
             PlayCommand = new RelayCommand(ExecutePlay);
             AddToPlaylistCommand = new RelayCommand(ExecuteAddToPlaylist);
             RemoveCommand = new RelayCommand(ExecuteRemove);
@@ -38,13 +39,8 @@ namespace MusicPlayerUI
 
                 if (mediaFile != null && playlist != null)
                 {
-                    playlist.MediaFiles.Add(mediaFile);
-                    string s = "";
-                    foreach (var item in playlist.MediaFiles)
-                    {
-                        s += item.TrackName + "\n";
-                    }
-                    MessageBox.Show($"{mediaFile.TrackName} added to {playlist.PlaylistName}\n{s}");
+                    _playlistService.AddToPlaylist(playlist, mediaFile);
+                    MessageBox.Show($"{mediaFile.TrackName} added to {playlist.PlaylistName}");
                 }
             }
             else if (parameter is object[] newPlaylistParams && newPlaylistParams.Length == 1)
@@ -55,11 +51,8 @@ namespace MusicPlayerUI
                 if (addPlaylistWindow.ShowDialog() == true)
                 {
                     var newPlaylist = new Playlist { PlaylistName = addPlaylistWindow.PlaylistName };
-                    if (mediaFile != null)
-                    {
-                        newPlaylist.MediaFiles.Add(mediaFile);
-                    }
-                    Playlists.Add(newPlaylist);
+                    _playlistService.AddNewPlaylist(newPlaylist);
+                    _playlistService.AddToPlaylist(newPlaylist, mediaFile);
                     MessageBox.Show($"New playlist '{newPlaylist.PlaylistName}' added with media file '{mediaFile?.TrackName}'");
                 }
             }

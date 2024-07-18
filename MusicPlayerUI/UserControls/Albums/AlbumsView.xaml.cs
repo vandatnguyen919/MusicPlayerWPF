@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
 
-namespace MusicPlayerUI.UserControls
+namespace MusicPlayerUI.UserControls.Albums
 {
     public partial class AlbumsView : UserControl
     {
@@ -10,7 +10,6 @@ namespace MusicPlayerUI.UserControls
         public AlbumsView()
         {
             InitializeComponent();
-            Albums = new ObservableCollection<Album>();
             DataContext = this;
         }
 

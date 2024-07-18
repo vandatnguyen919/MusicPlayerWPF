@@ -32,7 +32,7 @@
             <Button x:Name="shuffleButton" Content="Shuffle: Off" Click="ShuffleButton_Click" Width="90"  Padding="10 0" Margin="5 0" HorizontalContentAlignment="Left"/>
 
             <Button x:Name="playBackButton" Content="⏮" Click="PlayBackButton_Click" Padding="10 0" Margin="5 0"/>
-            <Button x:Name="playPauseButton" Content="❚❚" Click="PlayPause_Click" Width="40" Padding="10 0" Margin="5 0"/>
+            <Button x:Name="playPauseButton" Content="▶" Click="PlayPause_Click" Width="40" Padding="10 0" Margin="5 0"/>
             <Button x:Name="playNextButton" Content="⏭" Click="PlayNextButton_Click" Padding="10 0" Margin="5 0"/>
 
             <TextBlock x:Name="volumeIconTextBlock" Text="🔊" Margin="5,5,0,5" MouseLeftButtonUp="VolumeIcon_Click"/>

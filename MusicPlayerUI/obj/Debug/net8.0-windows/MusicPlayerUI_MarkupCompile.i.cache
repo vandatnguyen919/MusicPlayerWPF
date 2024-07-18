@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\HIEU\Desktop\MusicPlayer\MusicPlayerUI\App.xaml
-9-449436475
+11-1487731245
 
-18-718021600
+211360389167
 199-970408077
-MainWindow.xaml;UserControls\Albums\AlbumCard.xaml;UserControls\Albums\AlbumSongsView.xaml;UserControls\Albums\AlbumsView.xaml;UserControls\ArtistsView.xaml;UserControls\HomeView.xaml;UserControls\MediaPlayer.xaml;UserControls\Playlists\AddPlaylistWindow.xaml;UserControls\Playlists\PlaylistsView.xaml;
+MainWindow.xaml;UserControls\Albums\AlbumCard.xaml;UserControls\Albums\AlbumSongsView.xaml;UserControls\Albums\AlbumsView.xaml;UserControls\ArtistsView.xaml;UserControls\HomeView.xaml;UserControls\MediaPlayer.xaml;UserControls\Playlists\AddPlaylistWindow.xaml;UserControls\Playlists\PlaylistCard.xaml;UserControls\Playlists\PlaylistSongsView.xaml;UserControls\Playlists\PlaylistsView.xaml;
 
 True
 

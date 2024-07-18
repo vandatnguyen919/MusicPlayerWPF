@@ -5,6 +5,51 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <!-- Button Styles -->
+        <Style x:Key="CustomButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF5A5A5A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <!--<Setter Property="FontWeight" Value="Bold"/>-->
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                         CornerRadius="5"
+                         Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF7B7B7B"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FF474747"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- Style for the "Play all" button -->
+        <Style x:Key="PlayAllButtonStyle" BasedOn="{StaticResource CustomButtonStyle}" TargetType="Button">
+            <Setter Property="Background" Value="#FFFFA500"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFFFB52C"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FFC88200"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="TransparentButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
@@ -24,7 +69,8 @@
             <Setter Property="Cursor" Value="Hand"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                    <Setter Property="BorderBrush" Value="#ffc300"/>
                     <Setter Property="Effect">
                         <Setter.Value>
                             <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
@@ -36,6 +82,7 @@
 
         <!-- Custom Style for ContextMenu -->
         <Style TargetType="ContextMenu">
+            <Setter Property="Foreground" Value="#000"/>
             <Setter Property="OverridesDefaultStyle" Value="True"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Template">
@@ -49,19 +96,13 @@
             </Setter>
         </Style>
 
-        <!-- Composite Collection for Playlists -->
-        <!--<CompositeCollection x:Key="CompositePlaylists">
-            <CollectionContainer Collection="{Binding Source={x:Static Application.Current}, Path=Playlists}"/>
-            <MenuItem Header="+ Add New Playlist" Command="{Binding Source={x:Static Application.Current}, Path=AddToPlaylistCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
-        </CompositeCollection>-->
-
         <local:MultiParameterConverter x:Key="MultiParameterConverter" />
 
         <!-- Global DataGridRow Style -->
         <Style TargetType="DataGridRow">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="MinHeight" Value="40"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <!-- Adjust the row height -->
             <Setter Property="ContextMenu">
                 <Setter.Value>
                     <ContextMenu>
@@ -99,16 +140,28 @@
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsPlaying}" Value="True">
-                    <Setter Property="Background" Value="LightGreen" />
-                    <Setter Property="FontWeight" Value="Bold"/>
-                </DataTrigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#3d3d3d"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                </Trigger>
             </Style.Triggers>
         </Style>
 
-
         <!-- Global DataGridCell Style - Remove the default blue selection color in data grid -->
         <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <!-- Center the content vertically -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
             <Style.Triggers>
                 <Trigger Property="DataGridCell.IsSelected" Value="True">
                     <Setter Property="BorderBrush">
@@ -116,20 +169,65 @@
                             <SolidColorBrush Color="Transparent"/>
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="Foreground"
-                            Value="{DynamicResource
-                                   {x:Static SystemColors.ControlTextBrushKey}}"/>
+                    <Setter Property="Foreground" Value="#fff"/>
                     <Setter Property="Background">
                         <Setter.Value>
-                            <SolidColorBrush Color="#ccc"/>
+                            <SolidColorBrush Color="Transparent"/>
                         </Setter.Value>
                     </Setter>
                 </Trigger>
                 <DataTrigger Binding="{Binding IsPlaying}" Value="True">
-                    <Setter Property="Background" Value="LightGreen" />
-                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Foreground" Value="#ffc300"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
                 </DataTrigger>
             </Style.Triggers>
+        </Style>
+
+        <!-- DataGrid Style -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="#2B2B2B"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="RowBackground" Value="#2B2B2B"/>
+            <Setter Property="AlternatingRowBackground" Value="#333333"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#303030"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontWeight" Value="Medium"/>
+                        <Setter Property="BorderBrush" Value="#3A3A3A"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="Padding" Value="5"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="DataGridColumnHeader">
+                                    <Grid>
+                                        <Rectangle x:Name="BackgroundRectangle" Fill="{TemplateBinding Background}" />
+                                        <Border Padding="5 0">
+                                            <ContentPresenter VerticalAlignment="Center"/>
+                                        </Border>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal"/>
+                                                <VisualState x:Name="MouseOver">
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetName="BackgroundRectangle" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)" To="#505050" Duration="0:0:0.2"/>
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Application.Resources>
 </Application>
