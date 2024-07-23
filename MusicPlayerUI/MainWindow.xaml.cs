@@ -11,7 +11,7 @@ namespace MusicPlayerUI
         private UserControl homeView;
         private UserControl albumsView;
         private UserControl artistsView;
-        private UserControl playlistsView;
+        public static UserControl PlaylistsView {  get; set; }
 
         public MainWindow()
         {
@@ -26,7 +26,7 @@ namespace MusicPlayerUI
             homeView = new HomeView();
             albumsView = new AlbumsView();
             artistsView = new ArtistsView();
-            playlistsView = new PlaylistsView();
+            PlaylistsView = new PlaylistsView();
 
             // Set the initial view
             mainContentControl.Content = homeView;
@@ -42,18 +42,6 @@ namespace MusicPlayerUI
             mainContentControl.Content = albumsView;
         }
 
-        //private void AlbumsOption1_Click(object sender, RoutedEventArgs e)
-        //{
-        //    // Albums Option 1 logic
-        //    MessageBox.Show("Albums Option 1 clicked");
-        //}
-
-        //private void AlbumsOption2_Click(object sender, RoutedEventArgs e)
-        //{
-        //    // Albums Option 2 logic
-        //    MessageBox.Show("Albums Option 2 clicked");
-        //}
-
         private void ShowArtistsView(object sender, RoutedEventArgs e)
         {
             mainContentControl.Content = artistsView;
@@ -61,7 +49,8 @@ namespace MusicPlayerUI
 
         private void ShowPlaylistsView(object sender, RoutedEventArgs e)
         {
-            mainContentControl.Content = playlistsView;
+            PlaylistsView = new PlaylistsView();
+            mainContentControl.Content = PlaylistsView;
         }
     }
 }

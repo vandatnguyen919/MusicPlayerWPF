@@ -14,8 +14,8 @@ namespace MusicPlayerUI.UserControls
         public static MediaElement MediaElement { get; set; }
         public static Slider PlaybackSlider { get; set; }
         public static TextBlock CurrentTimeTextBlock { get; set; }
-        public static ObservableCollection<MediaFile> MediaFiles { get; set; } = [];
-        public static MediaFile CurrentMediaFile { get; set; }
+        public static ObservableCollection<MediaDto> MediaFiles { get; set; } = [];
+        public static MediaDto CurrentMediaFile { get; set; }
         public static DispatcherTimer Timer { get; set; }
         public static TextBlock TotalTimeTextBlock { get; set; }
         public static Button PlayPauseButton { get; set; }
@@ -194,7 +194,7 @@ namespace MusicPlayerUI.UserControls
             }
         }
 
-        public static void PlayMediaFile(MediaFile mediaFile)
+        public static void PlayMediaFile(MediaDto mediaFile)
         {
             if (CurrentMediaFile != null)
             {

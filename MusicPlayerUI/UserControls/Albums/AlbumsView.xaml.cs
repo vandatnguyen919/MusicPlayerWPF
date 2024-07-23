@@ -13,7 +13,7 @@ namespace MusicPlayerUI.UserControls.Albums
             DataContext = this;
         }
 
-        public static void addAlbum(MediaFile mediaFile)
+        public static void addAlbum(MediaDto mediaFile)
         {
             Album album = new Album() 
             {
@@ -26,17 +26,5 @@ namespace MusicPlayerUI.UserControls.Albums
                 Albums.Add(album);
             }
         }
-    }
-    public class Album
-    {
-        public string AlbumName { get; set; }
-        public string ArtistName { get; set; }
-        public int? ReleaseYear { get; set; }
-    }
-    public class AlbumComparer : IEqualityComparer<Album>
-    {
-        public bool Equals(Album x, Album y) => x.AlbumName == y.AlbumName && x.ArtistName == y.ArtistName && x.ReleaseYear == y.ReleaseYear;
-
-        public int GetHashCode(Album obj) => (obj.AlbumName, obj.ArtistName, obj.ReleaseYear).GetHashCode();
     }
 }

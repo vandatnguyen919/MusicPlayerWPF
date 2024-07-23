@@ -5,16 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MusicPlayerUI.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="#fff" Loaded="UserControl_Loaded">
+             d:DesignHeight="200" d:DesignWidth="800" Background="#fff" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
 
         <MediaElement Visibility="Collapsed" x:Name="mediaElement"/>
-        
-        <Grid Grid.Row="0" Margin="10">
+
+        <Grid Grid.Row="0" Margin="10 10 10 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -28,16 +28,115 @@
             <Slider x:Name="playbackSlider" Grid.Column="1" Height="20" HorizontalAlignment="Stretch" Minimum="0" Maximum="100" Value="0" ValueChanged="PlaybackSlider_ValueChanged" Margin="0 5"/>
         </Grid>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button x:Name="shuffleButton" Content="Shuffle: Off" Click="ShuffleButton_Click" Width="90"  Padding="10 0" Margin="5 0" HorizontalContentAlignment="Left"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+            <StackPanel Width="200" VerticalAlignment="Center">
+                <Button HorizontalAlignment="Right" x:Name="shuffleButton" Content="Shuffle: Off" Click="ShuffleButton_Click" Width="90"  Padding="10 0" Margin="5 0" HorizontalContentAlignment="Left"/>
+            </StackPanel>
 
             <Button x:Name="playBackButton" Content="⏮" Click="PlayBackButton_Click" Padding="10 0" Margin="5 0"/>
-            <Button x:Name="playPauseButton" Content="▶" Click="PlayPause_Click" Width="40" Padding="10 0" Margin="5 0"/>
+            <Button x:Name="playPauseButton" Style="{DynamicResource PlayButtonStyle}" Content="▶" Click="PlayPause_Click"/>
             <Button x:Name="playNextButton" Content="⏭" Click="PlayNextButton_Click" Padding="10 0" Margin="5 0"/>
 
-            <TextBlock x:Name="volumeIconTextBlock" Text="🔊" Margin="5,5,0,5" MouseLeftButtonUp="VolumeIcon_Click"/>
-            <Slider x:Name="volumeSlider" Minimum="0" Maximum="1" Value="1" Width="100" ValueChanged="VolumeSlider_ValueChanged" Margin="5"/>
-            <TextBlock x:Name="volumeValueTextBlock" Width="35" Text="100%" TextAlignment="Right" VerticalAlignment="Center" Margin="5"/>
+            <StackPanel Width="200" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock x:Name="volumeIconTextBlock" Text="🔊" Margin="5,5,0,5" MouseLeftButtonUp="VolumeIcon_Click"/>
+                <Slider x:Name="volumeSlider" Minimum="0" Maximum="1" Value="1" Width="100" ValueChanged="VolumeSlider_ValueChanged" Margin="5"/>
+                <TextBlock x:Name="volumeValueTextBlock" Width="30" Text="100%" TextAlignment="Right" VerticalAlignment="Center" Margin="5"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
+
+    <UserControl.Resources>
+        <!-- Style for control buttons -->
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#444"/>
+            <Setter Property="Background" Value="#FFE6E6E6"/>
+            <Setter Property="BorderBrush" Value="#444"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="0"
+                        CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ccc"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style for play button with gradient border -->
+        <Style x:Key="PlayButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#000"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse StrokeThickness="5" x:Name="ellipse">
+                                <Ellipse.Stroke>
+                                    <LinearGradientBrush>
+                                        <GradientStop Color="#FF7B42" Offset="0"/>
+                                        <GradientStop Color="#FFDD55" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Ellipse.Stroke>
+                            </Ellipse>
+                            <Ellipse Fill="White" Width="45" Height="45"/>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ellipse" Property="Stroke">
+                                    <Setter.Value>
+                                        <LinearGradientBrush>
+                                            <GradientStop Color="#FFD755" Offset="0"/>
+                                            <GradientStop Color="#FF9B42" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#333"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Slider">
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="0,5"/>
+            <Setter Property="Foreground" Value="#007ACC"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5,0"/>
+        </Style>
+    </UserControl.Resources>
 </UserControl>

@@ -70,10 +70,10 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="BorderThickness" Value="2"/>
-                    <Setter Property="BorderBrush" Value="#ffc300"/>
+                    <Setter Property="BorderBrush" Value="#ffaa42"/>
                     <Setter Property="Effect">
                         <Setter.Value>
-                            <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="0"/>
+                            <DropShadowEffect Color="#ffc300" BlurRadius="10" ShadowDepth="0"/>
                         </Setter.Value>
                     </Setter>
                 </Trigger>
@@ -106,7 +106,6 @@
             <Setter Property="ContextMenu">
                 <Setter.Value>
                     <ContextMenu>
-                        <MenuItem Header="Play" Command="{Binding Source={x:Static Application.Current}, Path=PlayCommand}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                         <MenuItem Header="Add to Playlist">
                             <MenuItem.ItemContainerStyle>
                                 <Style TargetType="MenuItem">

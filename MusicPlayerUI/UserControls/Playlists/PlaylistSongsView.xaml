@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MusicPlayerUI.UserControls.Playlists"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="#fff">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#fff" Loaded="UserControl_Loaded">
     <Border Background="#ccc">
         <Grid>
             <Grid.RowDefinitions>
@@ -35,17 +35,19 @@
                             </TextBlock.Text>
                         </TextBlock>
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                            <Button Content="▶ Play all" Style="{StaticResource PlayAllButtonStyle}"/>
-                            <Button Content="+ Add to" Style="{StaticResource CustomButtonStyle}"/>
-                            <Button Content="Rename" Style="{StaticResource CustomButtonStyle}"/>
-                            <Button Content="Delete" Style="{StaticResource CustomButtonStyle}"/>
+                            <Button x:Name="PlayAllButton" Content="▶ Play all" Style="{StaticResource PlayAllButtonStyle}" Click="PlayAllButton_Click"/>
+                            <Button x:Name="RenameButton" Content="Rename" Style="{StaticResource CustomButtonStyle}" Click="RenameButton_Click"/>
+                            <Button x:Name="DeleteButton" Content="Delete" Style="{StaticResource CustomButtonStyle}" Click="DeleteButton_Click"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </Border>
 
             <!-- Songs List -->
-            <DataGrid x:Name="songsDataGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Padding="5">
+            <DataGrid x:Name="playlistMediaDataGrid" Grid.Row="1"
+                  AutoGenerateColumns="False" 
+                  MouseLeftButtonUp="MediaDataGrid_MouseLeftButtonUp"
+                  IsReadOnly="True" SelectionUnit="FullRow" Padding="5">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Track Name" Binding="{Binding TrackName}" Width="*"/>
                     <DataGridTextColumn Header="Artist" Binding="{Binding Artist}" Width="*"/>

@@ -22,13 +22,16 @@
     <Compile Update="UserControls\Albums\AlbumsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserControls\ArtistsView.xaml.cs">
+    <Compile Update="UserControls\Artists\ArtistsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserControls\HomeView.xaml.cs">
+    <Compile Update="UserControls\Home\HomeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="UserControls\Playlists\AddPlaylistWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\Playlists\EditPlaylistWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="UserControls\Playlists\PlaylistCard.xaml.cs">
@@ -57,13 +60,16 @@
     <Page Update="UserControls\Albums\AlbumsView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="UserControls\ArtistsView.xaml">
+    <Page Update="UserControls\Artists\ArtistsView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="UserControls\HomeView.xaml">
+    <Page Update="UserControls\Home\HomeView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\Playlists\AddPlaylistWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\Playlists\EditPlaylistWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\Playlists\PlaylistCard.xaml">

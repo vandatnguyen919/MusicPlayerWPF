@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using MusicPlayerUI.Services;
+using Repositories.Entities;
+using Services;
 
 namespace MusicPlayerUI.UserControls.Playlists
 {
@@ -21,9 +12,9 @@ namespace MusicPlayerUI.UserControls.Playlists
     /// </summary>
     public partial class PlaylistsView : UserControl
     {
-        public ObservableCollection<Playlist> Playlists { get; set; }
+        public static ObservableCollection<Playlist> Playlists { get; set; } = [];
 
-        private PlaylistService _playlistService;
+        private PlaylistService _playlistService = new();
 
         public PlaylistsView()
         {
@@ -32,11 +23,8 @@ namespace MusicPlayerUI.UserControls.Playlists
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            _playlistService = new();
-            Playlists = PlaylistService.Playlists;
+            Playlists = new(_playlistService.GetAllPlaylists());
             DataContext = this;
-            //Playlists = PlaylistService.Playlists;
-            //playlistGrid.ItemsSource = Playlists;
         }
 
         private void AddNewPlaylistButton_Click(object sender, RoutedEventArgs e)
@@ -45,8 +33,10 @@ namespace MusicPlayerUI.UserControls.Playlists
             if (addPlaylistWindow.ShowDialog() == true)
             {
                 var newPlaylist = new Playlist { PlaylistName = addPlaylistWindow.PlaylistName };
-                _playlistService.AddNewPlaylist(newPlaylist);
-                MessageBox.Show($"New playlist '{newPlaylist.PlaylistName}' added");
+                Playlist addedPlaylist = _playlistService.CreatePlaylist(newPlaylist);
+                App.AddGlobalPlaylist(addedPlaylist);
+                Playlists.Add(addedPlaylist);
+                MessageBox.Show($"New playlist '{addedPlaylist.PlaylistName}' added");
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿using MusicPlayerUI.UserControls.Albums;
+﻿using MusicPlayerUI.Services;
+using MusicPlayerUI.UserControls.Albums;
+using Repositories.Entities;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,17 +25,17 @@ namespace MusicPlayerUI.UserControls.Playlists
 
         private void PlaylistCard_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Playlist playlist = PlaylistService.Playlists.Where(x => x.PlaylistName == this.PlaylistName).First();
+            Playlist playlist = PlaylistsView.Playlists.Where(x => x.PlaylistName == this.PlaylistName).First();
             var playlistSongsView = new PlaylistSongsView
             {
                 DataContext = new PlaylistDetails()
                 {
                     PlaylistName = this.PlaylistName,
-                    SongCount = playlist.MediaFiles.Count()
+                    SongCount = playlist.MediaEntities.Count()
                 }
             };
-            playlistSongsView.songsDataGrid.ItemsSource = null;
-            playlistSongsView.songsDataGrid.ItemsSource = playlist.MediaFiles;
+            playlistSongsView.Playlist = playlist;
+            PlaylistSongsView.PlaylistMediaFiles = new(playlist.MediaEntities.Select(MediaMapper.MapToDto));
             MainWindow.MainContentControl.Content = playlistSongsView;
         }
     }
